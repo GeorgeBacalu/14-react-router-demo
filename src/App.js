@@ -1,28 +1,22 @@
-import { Switch, Route, Redirect } from "react-router-dom";
-import MainHeader from "./components/MainHeader";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Products from "./pages/Products";
 import SingleProduct from "./pages/SingleProduct";
+import MainHeader from "./components/MainHeader";
 
 const App = () => {
   return (
     <>
       <MainHeader />
       <main>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/welcome" />
+        <Routes>
+          <Route path="/" element={<Navigate to="/welcome" />} />
+          <Route path="/welcome/*" element={<Welcome />}>
+            <Route path="new-user" element={<p>Welcome, new user!</p>} />
           </Route>
-          <Route path="/welcome">
-            <Welcome />
-          </Route>
-          <Route path="/products" exact>
-            <Products />
-          </Route>
-          <Route path="/products/:productId">
-            <SingleProduct />
-          </Route>
-        </Switch>
+          <Route path="/products/*" element={<Products />} />
+          <Route path="/products/:productId" element={<SingleProduct />} />
+        </Routes>
       </main>
     </>
   );
